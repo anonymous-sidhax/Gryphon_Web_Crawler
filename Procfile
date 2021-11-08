@@ -1,0 +1,1 @@
+web: gunicorn Gryphon_Web_Crawler.wsgi --log-file -

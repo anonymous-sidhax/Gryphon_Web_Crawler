@@ -1,0 +1,36 @@
+# Distribution / packaging
+.Python
+venv/
+env/
+*.sqlite3
+.idea/
+
+# Pipfiles
+Pipfile
+Pipfile.lock
+
+# pycache
+__pycache__.*
+__pycache__/
+**/__pycache__/**
+
+# Project asset folders
+media/
+
+# Database
+db.sqlite3
+
+# Editor directories and files
+.idea
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+#vscode
+.vscode
+*.mp3
+
+#staticfiles django
+staticfiles
