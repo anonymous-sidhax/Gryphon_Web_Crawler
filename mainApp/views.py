@@ -63,7 +63,6 @@ def initialize():
         }
     }
 
-
 def load_url_queue():
     base_url = ["https://wikipedia.com"]
     return base_url
