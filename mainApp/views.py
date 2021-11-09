@@ -162,6 +162,20 @@ def is_valid(url):
         print("String is a valid URL")
     except ValidationError as exception:
         print("String is not valid URL")
+
+    OR
+
+    # pip install validators
+    >>> import validators
+    >>> validators.url("http://google.com")
+    True
+    >>> validators.url("http://google")
+    ValidationFailure(func=url, args={'value': 'http://google', 'require_tld': True})
+    >>> if not validators.url("http://google"):
+    ...     print "not valid"
+    ... 
+    not valid
+    >>>
     """
     parsed = urlparse(url)
     return bool(parsed.netloc) and bool(parsed.scheme)
