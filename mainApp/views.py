@@ -117,6 +117,9 @@ def get_all_website_links(url):
         parsed_href = urlparse(href)
         # remove URL GET parameters, URL fragments, etc.
         href = parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
+        print (parsed_href.scheme)
+        print (parsed_href.netloc)
+        print (parsed_href.path)
 
         if not is_valid(href):
             # not a valid URL
@@ -133,6 +136,8 @@ def get_all_website_links(url):
 
         urls.add(href)
         #internal_urls.add(href)
+
+    print (len(href))
     return urls
 
 
