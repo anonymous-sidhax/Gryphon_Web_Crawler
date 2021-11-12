@@ -22,46 +22,50 @@ def index(request):
     return render(request, "homepage.html")
     
 def initialize():
-    """
-    Sets all of the variables for crawling,
-    and as a result can be used for effectively resetting the crawler.
-    """
-    # Declare global variables
-    global VERSION, START_TIME, START_TIME_LONG
-    global TODO_FILE, DONE_FILE, ERR_LOG_FILE
-    global RESPECT_ROBOTS
-    global TODO, DONE, THREAD_COUNT
-    global connection
-    global TOTAL_DOMAIN_COUNT
-    global ERROR_DOMAIN_COUNT
-    global VALID_ENTRY_COUNT
-    global TOTAL_TIME_TAKEN
-    global AVERAGE_TIME_TAKEN
-    global HEADERS
-    
-    # Getting Arguments
-    VERSION = '0.0.1'
+    try:
+        """
+        Sets all of the variables for crawling,
+        and as a result can be used for effectively resetting the crawler.
+        """
+        # Declare global variables
+        global VERSION, START_TIME, START_TIME_LONG
+        global TODO_FILE, DONE_FILE, ERR_LOG_FILE
+        global RESPECT_ROBOTS
+        global TODO, DONE, THREAD_COUNT
+        global connection
+        global TOTAL_DOMAIN_COUNT
+        global ERROR_DOMAIN_COUNT
+        global VALID_ENTRY_COUNT
+        global TOTAL_TIME_TAKEN
+        global AVERAGE_TIME_TAKEN
+        global HEADERS
 
-    # Initializing variables
-    url_queue = []
-    RESPECT_ROBOTS = False
-    TODO_FILE, DONE_FILE = '', ''
-    TODO, DONE = queue.Queue(), queue.Queue()
-    TOTAL_DOMAIN_COUNT = 0
-    ERROR_DOMAIN_COUNT = 0
-    VALID_ENTRY_COUNT = 0
-    TOTAL_TIME_TAKEN  = 0
-    AVERAGE_TIME_TAKEN = 0
-    connection = None
+        # Getting Arguments
+        VERSION = '0.0.1'
 
-    HEADERS = {
-    'gryphon': {
-        'User-Agent': 'Gryphon Web Crawler (Windows NT 10.0; bot; +https://github.com/anonymous-sidhax/Gryphon_Web_Crawler)',
-        'Accept-Language': 'en_US, en-US, en',
-        'Accept-Encoding': 'gzip',
-        'Connection': 'keep-alive'
+        # Initializing variables
+        url_queue = []
+        RESPECT_ROBOTS = False
+        TODO_FILE, DONE_FILE = '', ''
+        TODO, DONE = queue.Queue(), queue.Queue()
+        TOTAL_DOMAIN_COUNT = 0
+        ERROR_DOMAIN_COUNT = 0
+        VALID_ENTRY_COUNT = 0
+        TOTAL_TIME_TAKEN  = 0
+        AVERAGE_TIME_TAKEN = 0
+        connection = None
+
+        HEADERS = {
+        'gryphon': {
+            'User-Agent': 'Gryphon Web Crawler (Windows NT 10.0; bot; +https://github.com/anonymous-sidhax/Gryphon_Web_Crawler)',
+            'Accept-Language': 'en_US, en-US, en',
+            'Accept-Encoding': 'gzip',
+            'Connection': 'keep-alive'
+            }
         }
-    }
+    except:
+        print('ERROR: Initialazation Failed')
+        pass
 
 def load_url_queue():
     base_url = ["https://wikipedia.com"]
@@ -103,42 +107,46 @@ def get_all_website_links(url):
     """
     Returns all URLs from <a> tags - href 
     """
-    urls = set()
-    domain_name = urlparse(url).netloc
-    soup = BeautifulSoup(requests.get(url).content, "html.parser")
-    for a_tag in soup.findAll("a"):
-        href = a_tag.attrs.get("href")
-        if href == "" or href is None:
-            # href empty tag
-            continue
+    try:
+        urls = set()
+        domain_name = urlparse(url).netloc
+        soup = BeautifulSoup(requests.get(url).content, "html.parser")
+        for a_tag in soup.findAll("a"):
+            href = a_tag.attrs.get("href")
+            if href == "" or href is None:
+                # href empty tag
+                continue
 
-        # join the URL if it's relative (not absolute link)
-        href = urljoin(url, href)
-        parsed_href = urlparse(href)
-        # remove URL GET parameters, URL fragments, etc.
-        href = parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
-        print (parsed_href.scheme)
-        print (parsed_href.netloc)
-        print (parsed_href.path)
+            # join the URL if it's relative (not absolute link)
+            href = urljoin(url, href)
+            parsed_href = urlparse(href)
+            # remove URL GET parameters, URL fragments, etc.
+            href = parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
+            print (parsed_href.scheme)
+            print (parsed_href.netloc)
+            print (parsed_href.path)
 
-        if not is_valid(href):
-            # not a valid URL
-            continue
+            if not is_valid(href):
+                # not a valid URL
+                continue
 
-        # if href in internal_urls:
-        #     # already in the set
-        #     continue
-        # if domain_name not in href:
-        #     # external link
-        #     if href not in external_urls:
-        #         external_urls.add(href)
-        #     continue
+            # if href in internal_urls:
+            #     # already in the set
+            #     continue
+            # if domain_name not in href:
+            #     # external link
+            #     if href not in external_urls:
+            #         external_urls.add(href)
+            #     continue
 
-        urls.add(href)
-        #internal_urls.add(href)
+            urls.add(href)
+            #internal_urls.add(href)
 
-    print (len(href))
-    return urls
+        print (len(href))
+        return urls
+    except:
+        print('ERROR: Failed To Get All Website Links')
+        pass
 
 
 
@@ -182,8 +190,12 @@ def is_valid(url):
     not valid
     >>>
     """
-    parsed = urlparse(url)
-    return bool(parsed.netloc) and bool(parsed.scheme)
+    try:
+        parsed = urlparse(url)
+        return bool(parsed.netloc) and bool(parsed.scheme)
+    except:
+        print('ERROR: Failed Validating')
+        pass
 
 
 ###########
@@ -194,4 +206,5 @@ class SizeError(Exception):
     """
     Raised when a file is too large to download in an acceptable time.
     """
+    print('ERROR: File Is Too Large To Download')
     pass
