@@ -18,10 +18,25 @@ from lxml import etree
 from lxml.html import iterlinks, resolve_base_href, make_links_absolute
 
 import Utils.views as util
-
+from Compliance_Checks.Search import meta_description_tag_check,title_tag_check
 def index(request):
     return render(request, "homepage.html")
     
+def analyze(base_url):
+
+    urls = crawl(base_url)
+    for url in urls:
+        urls = urls.append(get_all_website_links())
+
+    if not meta_description_tag_check:
+        # add row in database
+        pass
+    if not title_tag_check:
+        # add row in database
+        pass
+
+
+
 def initialize():
     '''
     Sets all of the variables for crawling,

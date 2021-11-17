@@ -20,3 +20,19 @@ def meta_description_tag_check(url):
             return True
     
     return False
+
+def title_tag_check(page_text):
+    '''
+    Checking for title on a web page.
+    @input:
+        page_text: Source code of the current web page.
+    @output:
+        boolean: True (if title is present) else False
+    '''
+    soup = BeautifulSoup(page_text)
+
+    title = soup.find_all('title')
+
+    if title:
+        return True
+    return False
