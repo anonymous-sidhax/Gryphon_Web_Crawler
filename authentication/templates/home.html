@@ -35,21 +35,83 @@
       <section class="results d-none">
         <div class="cards">
           <div id="card1" class="card" onclick="openCard(event, 'card1')">
-            <div class="chart" id="graph" data-percent="88"></div>
-        </div>
-        <div id="card2" class="card" onclick="openCard(event, 'card2')">
-            <div class="chart" id="graph" data-percent="88"></div>
-        </div>
-        <div id="card3" class="card" onclick="openCard(event, 'card3')">
-            <div class="chart" id="graph" data-percent="88"></div>
-        </div>
-        <div id="card4" class="card" onclick="openCard(event, 'card4')">
-            <div class="chart" id="graph" data-percent="88"></div>
+            <div class="chart" id="graph">
+              <svg viewBox="0 0 36 36">
+                <path
+                  class="circle"
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#444"
+                  ;
+                  stroke-width="1"
+                  ;
+                  stroke-dasharray="75, 100"
+                />
+                <text x="18" y="20.35" class="percentage">75%</text>
+              </svg>
+            </div>
+          </div>
+          <div id="card2" class="card" onclick="openCard(event, 'card2')">
+            <div class="chart" id="graph">
+              <svg viewBox="0 0 36 36">
+                <path
+                  class="circle"
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#444"
+                  ;
+                  stroke-width="1"
+                  ;
+                  stroke-dasharray="75, 100"
+                />
+                <text x="18" y="20.35" class="percentage">75%</text>
+              </svg>
+            </div>
+          </div>
+          <div id="card3" class="card" onclick="openCard(event, 'card3')">
+            <div class="chart" id="graph">
+              <svg viewBox="0 0 36 36">
+                <path
+                  class="circle"
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#444"
+                  ;
+                  stroke-width="1"
+                  ;
+                  stroke-dasharray="75, 100"
+                />
+                <text x="18" y="20.35" class="percentage">75%</text>
+              </svg>
+            </div>
+          </div>
+          <div id="card4" class="card" onclick="openCard(event, 'card4')">
+            <div class="chart" id="graph">
+              <svg viewBox="0 0 36 36">
+                <path
+                  class="circle"
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#444"
+                  ;
+                  stroke-width="1"
+                  ;
+                  stroke-dasharray="75, 100"
+                />
+                <text x="18" y="20.35" class="percentage">75%</text>
+              </svg>
+            </div>
           </div>
         </div>
-        <div class="cardContent">
-            
-        </div>
+        <div class="cardContent"></div>
       </section>
     </section>
 
@@ -59,65 +121,25 @@
         e.preventDefault();
         searchBar.classList.add("animateup");
         document.querySelector("section.results").classList.remove("d-none");
+        let card4 = document.querySelector("#card4 .chart")
+        console.log(card4)
+        generateProgress(card4, 75)
       });
-      
+
       function openCard(evt, cardName) {
-          var i, cardContent, card;
-          cardContent = document.getElementsByClassName("cardContent");
-          for (i = 0; i < cardContent.length; i++) {
-              cardContent[i].style.display = "none";
-            }
-            card = document.getElementsByClassName("card");
-            for (i = 0; i < card.length; i++) {
-                card[i].className = card[i].className.replace(" visible", "");
-            }
-            document.getElementById(cardName).style.display = "block";
-            evt.currentTarget.className += " visible";
+        var i, cardContent, card;
+        cardContent = document.getElementsByClassName("cardContent");
+        for (i = 0; i < cardContent.length; i++) {
+          cardContent[i].style.display = "none";
         }
-        
-    var canvas = document.createElement('canvas');
-    var span = document.createElement('span');
-
-    var el = document.querySelectorAll('#graph').forEach((v) => {
-        v.appendChild(span);
-        v.appendChild(canvas);
-    })
-    
-    var options = {
-        percent:  el.getAttribute('data-percent') || 25,
-        size: el.getAttribute('data-size') || 220,
-        lineWidth: el.getAttribute('data-line') || 15,
-        rotate: el.getAttribute('data-rotate') || 0
-    }
-
-    span.textContent = options.percent + '%';
-        
-    if (typeof(G_vmlCanvasManager) !== 'undefined') {
-        G_vmlCanvasManager.initElement(canvas);
-    }
-
-    var ctx = canvas.getContext('2d');
-    canvas.width = canvas.height = options.size;
-
-
-    ctx.translate(options.size / 2, options.size / 2); // change center
-    ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI); // rotate -90 deg
-
-    //imd = ctx.getImageData(0, 0, 240, 240);
-    var radius = (options.size - options.lineWidth) / 2;
-
-    var drawCircle = function(color, lineWidth, percent) {
-            percent = Math.min(Math.max(0, percent || 1), 1);
-            ctx.beginPath();
-            ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
-            ctx.strokeStyle = color;
-            ctx.lineCap = 'round'; // butt, round or square
-            ctx.lineWidth = lineWidth
-            ctx.stroke();
-    };
-
-    drawCircle('#fcfdfc', options.lineWidth, 100 / 100);
-    drawCircle('#e1e2f9', options.lineWidth, options.percent / 100);
+        card = document.getElementsByClassName("card");
+        for (i = 0; i < card.length; i++) {
+          card[i].className = card[i].className.replace(" visible", "");
+        }
+        document.getElementById(cardName).style.display = "block";
+        evt.currentTarget.className += " visible";
+      }
+      
     </script>
   </body>
 </html>
