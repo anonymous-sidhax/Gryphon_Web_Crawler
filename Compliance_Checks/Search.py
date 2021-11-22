@@ -38,3 +38,4 @@ def title_tag_check(page_text):
     if title:
         return True
     return False
+
