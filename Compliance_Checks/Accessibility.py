@@ -46,6 +46,7 @@ def open_in_new_window_src_check(page_text):
         page_text: Source code of the current web page.
     @output:
         list: List of <a> tags with target='_blank'.
+    Check for buttons as well.
     '''
     soup = BeautifulSoup(page_text.text, "html.parser")
 

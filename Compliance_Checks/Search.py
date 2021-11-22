@@ -31,7 +31,7 @@ def title_tag_check(page_text):
     @output:
         boolean: True (if title is present) else False
     '''
-    soup = BeautifulSoup(page_text)
+    soup = BeautifulSoup(page_text.text, 'html.parser')
 
     title = soup.find_all('title')
 
@@ -39,3 +39,16 @@ def title_tag_check(page_text):
         return True
     return False
 
+def doctype_check(page_text):
+    '''
+    Checking if DOCTYPE is defined on a page.
+    https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
+    @input:
+        page_text: Source code of the current web page.
+    @output:
+        string: returns the doctype if available else None
+    '''
+    soup = BeautifulSoup(page_text.text, 'html.parser')
+
+    items = [item for item in soup.contents if isinstance(item, BeautifulSoup.Doctype)]
+    return items[0] if items else None
