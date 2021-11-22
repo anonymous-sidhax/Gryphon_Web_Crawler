@@ -37,3 +37,22 @@ def alt_in_img_elements_check(page_text):
             empty_alt.append(img_tag['src'])   
     
     return empty_alt
+
+def open_in_new_window_src_check(page_text):
+    '''
+    Checking <a> tags that open in new window/tab.
+    (https://www.w3.org/TR/WCAG20-TECHS/F22.html)
+    @input:
+        page_text: Source code of the current web page.
+    @output:
+        list: List of <a> tags with target='_blank'.
+    '''
+    soup = BeautifulSoup(page_text.text, "html.parser")
+
+    a_tags = soup.find_all('a')
+    a_new_window = []
+    for a_tag in a_tags:
+        if a_tag.find('target') == '_blank':
+            a_new_window.append(a_tag['src'])
+    
+    return a_new_window
