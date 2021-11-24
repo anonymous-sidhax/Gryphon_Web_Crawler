@@ -29,3 +29,6 @@ There will be 5 more tabs:
 - Usability
 
 Rest of the tabs we will finish it up later. Complete this for now.
+
+normal :- rgb(234 234 234);
+red :- rgb(247 220 220)
