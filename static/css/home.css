@@ -23,6 +23,11 @@ body {
   margin: auto;
 }
 
+h4 {
+  text-align: center;
+  font-size: 2vh;
+}
+
 nav.navbar {
   height: 7vh;
   display: flex;
@@ -140,15 +145,17 @@ form.search.animateup input {
 
 section.results .cards {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
 }
 
 section.results .cards .card {
-  width: 100px;
-  height: 100px;
-  border-radius: 15px;
+  margin: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
   background-color: rgb(241, 248, 252);
 }
 
@@ -178,12 +185,8 @@ section.results .cards .card .inner-section p {
 }
 
 section.results .cards .card.visible {
-  background-color: var(--dark-blue);
+  /* background-color: var(--dark-blue); */
   display: block;
-}
-
-section.results .cards .card.visible text {
-  fill: var(--white);
 }
 
 @keyframes progress {
@@ -224,6 +227,12 @@ section.results .cards .card.visible text {
 @media screen and (max-width: 425px) {
   .profile .username {
     display: none;
+  }
+}
+
+@media screen and (max-width: 900px ) {
+  section.results .cards {
+    flex-direction: column;
   }
 }
 
