@@ -27,7 +27,8 @@
     <section id="border"></section>
 
     <section id="main">
-      <form class="search">
+      <form class="search" action="{% url 'load_url_queue' %}" method="post">
+        {% csrf_token %}
         <input type="text" placeholder="Enter the website URL"/>
         <button type="submit" class="search">Run</button>
       </form>
@@ -124,7 +125,6 @@
     <script>
       let searchBar = document.querySelector(".search");
       searchBar.addEventListener("submit", (e) => {
-        e.preventDefault();
         searchBar.classList.add("animateup");
         document.querySelector("section.results").classList.remove("d-none");
         let card4 = document.querySelector("#card4 .chart")
