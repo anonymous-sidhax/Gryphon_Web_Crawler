@@ -230,27 +230,14 @@ section.results .cards .card.visible {
   }
 }
 
-@media screen and (max-width: 900px ) {
+@media screen and (max-width: 900px) {
   section.results .cards {
     flex-direction: column;
   }
 }
 
-/*
-- white 
-    #FCFDFC
-- light-green
-    #D0DEA6
-- Black
-    #060706
-- dark-green
-    #265A38
-
-#B1DE39
-
-#A5A99E
-
-#7D8961
-
-#B3D050
-*/
+.chart#graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
