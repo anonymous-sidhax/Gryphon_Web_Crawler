@@ -8,6 +8,12 @@ def login(request):
 def dashboard(request):
     return render(request, "home.html")
 
+def crawler(request):
+    base_url = request.Get.get('base_url')
+    print ()
 
 def load_url_queue(request):
-    return render(request, "home.html")
+    base_url = ["https://wikipedia.com"]
+    print (base_url)
+    #return base_url
+    

@@ -22,19 +22,6 @@ from Compliance_Checks.Search import meta_description_tag_check,title_tag_check
 
 def index(request):
     return render(request, "home.html")
-    
-def analyze(base_url):
-
-    urls = crawl(base_url)
-    for url in urls:
-        urls = urls.append(get_all_website_links())
-
-    if not meta_description_tag_check:
-        # add row in database
-        pass
-    if not title_tag_check:
-        # add row in database
-        pass
 
 def initialize():
     '''
@@ -78,41 +65,6 @@ def initialize():
         }
     }
 
-def load_url_queue():
-    base_url = ["https://wikipedia.com"]
-    return base_url
-
-def storing_data_to_database():
-    pass
-
-def crawl(base_url):
-    global HEADERS, ERROR_DOMAIN_COUNT
-    try:
-        # Attempt to get size of document in bytes
-        size_of_doc = int(requests.head(base_url, headers=HEADERS).headers['Content-length'])
-    except KeyError:  # Sometimes Content-Length header is not returned...
-        size_of_doc = 1
-    except requests.exceptions.RequestException as e:
-        # log warnings in db and also count of errors - error_domain_count
-        ERROR_DOMAIN_COUNT += 1
-
-    try:
-        page = requests.get(base_url, headers=HEADERS, allow_redirects=True, timeout=2) # Get Page
-    except requests.exceptions.RequestException as e:
-        pass
-
-    # Getting all URLs from <a> tags - href
-    try:
-        # Pull out all links after resolving them using any <base> tags found in the document.
-        urls = [url for element, attribute, url, pos in iterlinks(resolve_base_href(make_links_absolute(page.content, base_url)))]
-    except etree.ParseError:
-        # If the document is not HTML content this will return an empty list.
-        urls = []
-
-    # To remove duplicate links
-    urls = list(set(urls))
-    
-    return urls
 
 def get_all_website_links(url):
     '''
