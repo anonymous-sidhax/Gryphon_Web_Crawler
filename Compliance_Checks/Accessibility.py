@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup 
 import collections
 
-def duplicate_id_check(page_text):
+def duplicate_id_check(ERROR_COUNT, page_text, url):
     '''
     Checking if same ID is used on more than one element.
     Priority 1 - A (https://www.w3.org/TR/2008/REC-WCAG20-20081211/#ensure-compat-parses)
@@ -10,6 +10,10 @@ def duplicate_id_check(page_text):
     @output:
         list: List of duplicate ids.
     '''
+    error_text = "Duplicate id - the same ID is used on more than one element."
+    guideline = "WCAG 2.0 A 4.1.1"
+    guideline_link = "https://www.w3.org/TR/2008/REC-WCAG20-20081211/#ensure-compat-parses"
+
     soup = BeautifulSoup(page_text)
 
     ids = [a.attrs['id'] for a in soup.find_all(attrs={'id': True})]
@@ -17,7 +21,10 @@ def duplicate_id_check(page_text):
 
     duplicate_ids = [key for key, value in ids.items() if value > 1]
 
-    return duplicate_ids
+    if duplicate_ids:
+        return [error_text, url, guideline, guideline_link, duplicate_ids]
+    else:
+        return None
 
 def alt_in_img_elements_check(page_text):
     '''
