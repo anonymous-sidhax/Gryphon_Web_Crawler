@@ -125,12 +125,15 @@
     <script>
       let searchBar = document.querySelector(".search");
       searchBar.addEventListener("submit", (e) => {
+        e.preventDefault();
         searchBar.classList.add("animateup");
         document.querySelector("section.results").classList.remove("d-none");
-        let card4 = document.querySelector("#card4 .chart")
-        console.log(card4)
-        generateProgress(card4, 75)
+        SendData(e.target.content);
       });
+
+      function SendData(data) {
+          console.log(data);
+      }
 
       function openCard(evt, cardName) {
         var i, cardContent, card;
