@@ -7,7 +7,10 @@ from concurrent.futures import ThreadPoolExecutor
 # pip3 install lxml
 from lxml import etree
 from lxml.html import iterlinks, resolve_base_href, make_links_absolute
+#import Compliance_Checks
 
+# importing compliance check functions
+from Compliance_Checks import Accessibility
 
 '''
 Sets all of the variables for crawling,
@@ -28,6 +31,8 @@ HEADERS = {
 }
 LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES = [], [], [], [], [], [], [], []
 CRAWLED_URLS, NEW_URLS, URLS = [], [], []
+ACCESSIBILITY = {}
+ERROR_COUNT = 1
 
 def get_all_website_links(url):
     global NEW_URLS, CRAWLED_URLS, URLS
@@ -55,6 +60,7 @@ def get_all_website_links(url):
     else:
         return NEW_URLS
 
+
 def remove_duplicates(duplicate_list):
     '''
     Removing duplicate values from a list.
@@ -64,10 +70,13 @@ def remove_duplicates(duplicate_list):
         return unique_list
     return duplicate_list
 
+
 def crawler():
     start_time = time.time()
     global LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES
     global CRAWLED_URLS, NEW_URLS, URLS
+    global ACCESSIBILITY
+    global ERROR_COUNT
 
     #base_url = request.Get.get('base_url')
     base_url = "https://www.wikipedia.com"
@@ -132,6 +141,20 @@ def crawler():
     end_time = time.time()
     print (end_time-start_time)
     
+    
+    for link in LINKS:
+        try:
+            page = requests.get(link, headers=HEADERS, allow_redirects=True, timeout=2) # Get Page
+        except requests.exceptions.RequestException as e:
+            print (e)
+
+        check = Accessibility.duplicate_id_check(ERROR_COUNT, page.content, link)
+        
+        if check is not None:
+            ACCESSIBILITY[ERROR_COUNT] = check
+            ERROR_COUNT+=1
+
+    print (ACCESSIBILITY)
 
 crawler()
 

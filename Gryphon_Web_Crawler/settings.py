@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainApp',
     'authentication',
+    'Compliance_Checks',
 ]
 
 MIDDLEWARE = [
