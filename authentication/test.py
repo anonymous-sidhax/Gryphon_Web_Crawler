@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 # pip3 install lxml
 from lxml import etree
 from lxml.html import iterlinks, resolve_base_href, make_links_absolute
-#import Compliance_Checks
+# import Compliance_Checks
 
 # importing compliance check functions
 from Compliance_Checks import Accessibility
