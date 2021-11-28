@@ -70,7 +70,7 @@ def remove_duplicates(duplicate_list):
 
 
 def crawler():
-    # print ("test")
+    print ("test")
     # start_time = time.time()
     # global LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES
     # global CRAWLED_URLS, NEW_URLS, URLS

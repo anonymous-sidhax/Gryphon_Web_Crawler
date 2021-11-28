@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import login, dashboard
-from .test import crawler
+from .views import crawler
 
 urlpatterns = [
     path("login", login),
