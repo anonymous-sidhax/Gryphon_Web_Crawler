@@ -27,7 +27,7 @@
     <section id="border"></section>
 
     <section id="main">
-      <form class="search" action="{% url 'load_url_queue' %}" method="POST">
+      <form class="search" action="test" method="POST">
         {% csrf_token %}
         <input type="text" placeholder="Enter the website URL" name="base_url"/>
         <button type="submit" class="search">Run</button>
