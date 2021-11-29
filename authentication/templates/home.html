@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <script src="{% static 'js/home.js' %}" defer></script>
     <title>Gryphon</title>
   </head>
   <body>
@@ -27,9 +28,13 @@
     <section id="border"></section>
 
     <section id="main">
-      <form class="search" action="{% url 'load_url_queue' %}" method="POST">
+      <form class="search" action="test" method="POST">
         {% csrf_token %}
-        <input type="text" placeholder="Enter the website URL" name="base_url"/>
+        <input
+          type="text"
+          placeholder="Enter the website URL"
+          name="base_url"
+        />
         <button type="submit" class="search">Run</button>
       </form>
 
@@ -117,38 +122,11 @@
           </div>
         </div>
         <div class="cardContent">
+          <div class="cardContent-card1">
             
+          </div>
         </div>
       </section>
     </section>
-
-    <script>
-      let searchBar = document.querySelector(".search");
-      searchBar.addEventListener("submit", (e) => {
-        e.preventDefault();
-        searchBar.classList.add("animateup");
-        document.querySelector("section.results").classList.remove("d-none");
-        SendData(e.target.content);
-      });
-
-      function SendData(data) {
-          console.log(data);
-      }
-
-      function openCard(evt, cardName) {
-        var i, cardContent, card;
-        cardContent = document.getElementsByClassName("cardContent");
-        for (i = 0; i < cardContent.length; i++) {
-          cardContent[i].style.display = "none";
-        }
-        card = document.getElementsByClassName("card");
-        for (i = 0; i < card.length; i++) {
-          card[i].className = card[i].className.replace(" visible", "");
-        }
-        document.getElementById(cardName).style.display = "block";
-        evt.currentTarget.className += " visible";
-      }
-      
-    </script>
   </body>
 </html>
