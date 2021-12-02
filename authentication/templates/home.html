@@ -34,6 +34,7 @@
           type="text"
           placeholder="Enter the website URL"
           name="base_url"
+          class="site-url"
         />
         <button type="submit" class="search">Run</button>
       </form>
@@ -186,7 +187,7 @@
         Http.open("POST", url);
         Http.setRequestHeader("X-CSRFToken", csrftoken);
         Http.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-        Http.send();
+        Http.send(JSON.stringify({"url": document.querySelector(".site-url").value}));
 
         return (Http.onreadystatechange = (e) => {
           if(Http.responseText)
