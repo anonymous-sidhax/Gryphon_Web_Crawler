@@ -19,10 +19,10 @@
     <nav class="navbar">
       <div class="nav-logo">Gryphon</div>
       <div class="profile">
-        <p class="username">Siddesh Shewde</p>
-        <div class="profile-logo">
-          <img src="{% static 'images/sid1.jpeg' %}" alt="" />
-        </div>
+        <!-- <p class="username">Siddesh Shewde</p> -->
+          <!-- <div class="profile-logo">
+            <img src="{% static 'images/sid1.jpeg' %}" alt="" />
+          </div> -->
       </div>
     </nav>
     <section id="border"></section>
@@ -39,7 +39,7 @@
       </form>
 
       <section class="results d-none">
-        <div class="cards">
+        <!-- <div class="cards">
           <div id="card1" class="card" onclick="openCard(event, 'card1')">
             <div class="chart" id="graph">
               <svg viewBox="0 0 36 36">
@@ -120,7 +120,7 @@
               <h4>SEO</h4>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="table-wrapper">
           <table class="table">
             <thead>
@@ -131,29 +131,115 @@
                 <th>Error Text</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>xxx</td>
-                <td>xxx</td>
-                <td>xxx</td>
-                <td>xxx</td>
-              </tr>
-              <tr>
-                <td>xxx</td>
-                <td>xxx</td>
-                <td>xxx</td>
-                <td>xxx</td>
-              </tr>
-              <tr>
-                <td>s</td>
-                <td>s</td>
-                <td>xx</td>
-                <td>xxx</td>
-              </tr>
+            <tbody class="table-body">
             </tbody>
           </table>
         </div>
       </section>
     </section>
+
+    <script defer>
+      /**
+    Get Cookie (https://docs.djangoproject.com/en/3.2/ref/csrf/)
+    @param {name} Name of the cookie example:- getCookie('csrftoken')
+*/
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      /**
+    Function for opening cards
+    @param {string} evt - Event name
+    @param {string} cardName - Identifier for the card
+*/
+      function openCard(evt, cardName) {
+        var i, cardContent, card;
+        cardContent = document.getElementsByClassName("cardContent");
+        for (i = 0; i < cardContent.length; i++) {
+          cardContent[i].style.display = "none";
+        }
+        card = document.getElementsByClassName("card");
+        for (i = 0; i < card.length; i++) {
+          card[i].className = card[i].className.replace(" visible", "");
+        }
+        document.getElementById(cardName).style.display = "block";
+        evt.currentTarget.className += " visible";
+      }
+
+      function SendData(endpoint) {
+        const Http = new XMLHttpRequest();
+        const url = endpoint;
+        Http.open("POST", url);
+        Http.setRequestHeader("X-CSRFToken", csrftoken);
+        Http.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+        Http.send();
+
+        return (Http.onreadystatechange = (e) => {
+          if(Http.responseText)
+          {
+            // Flush data in the tables
+            document.querySelector("tbody").innerHTML = "";
+            let jsonErrorsObj = JSON.parse(Http.responseText)["Errors"]
+            let jsonStandardsObj = JSON.parse(Http.responseText)["Standards"]
+            let jsonCompatibilityObj = JSON.parse(Http.responseText)["Compatibility"]
+            
+            const errorkeys = Object.values(jsonErrorsObj);
+            const standardkeys = Object.values(jsonStandardsObj);
+            const compatibility = Object.values(jsonCompatibilityObj);
+            let errorsrow = document.createElement("tr")
+            let standardsrow = document.createElement("tr")
+            
+            compatibility[0].forEach(element => {
+              let tr = document.createElement("tr")
+              let td = document.createElement("td")
+              tr.appendChild(td);
+              td.innerText = element
+              document.querySelector(".table-body").appendChild(tr)
+            })
+            standardkeys[0].forEach(element => {
+              let td = document.createElement("td")
+              standardsrow.appendChild(td);
+              td.innerText = element
+              document.querySelector(".table-body").appendChild(standardsrow)
+            })
+            
+            errorkeys[0].forEach(element => {
+              let td = document.createElement("td")
+              errorsrow.appendChild(td);
+              td.innerText = element
+              document.querySelector(".table-body").appendChild(errorsrow)
+            });
+          }
+        });
+      }
+
+      let searchBar = document.querySelector(".search");
+      searchBar.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (searchBar.classList.contains("animateup")) {
+          SendData("{% url 'crawler' %}");
+        } else {
+          searchBar.classList.add("animateup");
+          document.querySelector("section.results").classList.remove("d-none");
+          SendData("{% url 'crawler' %}");
+        }
+      });
+
+      const csrftoken = getCookie("csrftoken");
+    </script>
   </body>
 </html>

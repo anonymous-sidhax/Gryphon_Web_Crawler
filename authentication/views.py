@@ -13,7 +13,10 @@ def dashboard(request):
 # You can't access this endpoint from GET method
 def crawler(request):
     if request.method == "POST":
-        return JsonResponse({0: ["Duplicate id - the same ID is used on more than one element.", "https://www.google.com", "WCAG 2.0 A 4.1.1", "https://www.w3.org/TR/2008/REC-WCAG20-20081211/#ensure-compat-parses", ['abc', 'def']]})
+        return JsonResponse(
+            {"Errors": {0: ["Duplicate id - the same ID is used on more than one element.", "https://www.google.com/", "WCAG 2.0 A 4.1.1", "https://www.w3.org/TR/2008/REC-WCAG20-20081211/#ensure-compat-parses", ['abc', 'def']]}, 
+            "Standards" : {0 : ["same format as errors"]}, 
+            "Compatibility": {0 : [""]}})
     else:
         return HttpResponseForbidden()
 
