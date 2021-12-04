@@ -60,6 +60,7 @@ def dashboard(request):
 # You can't access this endpoint from GET method
 def crawler(request):
     if request.method == "POST":
+        """
         base_url = json.loads(request.body)['url'] # URL from the input field
         start_time = time.time()
         global LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES
@@ -141,9 +142,11 @@ def crawler(request):
         end_time = time.time()
         print (end_time-start_time)
         print (ACCESSIBILITY)
+        """
         return JsonResponse(
-            {"Errors": {0: ACCESSIBILITY}, 
-            "Standards" : {0 : ["same format as errors"]}, 
-            "Compatibility": {0 : [""]}})
+            {"Errors": {0: ["Error Description", "URL1", "GUILDELINE1", "ERROR TEXT2"], 1: ["Error Description 2", "URL2", "GUILDELINE1", "ERROR TEXT1"]},
+            "Compatibility": {0: [], 1: []}, 
+            "Standards": {0:[], 1:[]}}
+            )
     else:
         return HttpResponseForbidden()

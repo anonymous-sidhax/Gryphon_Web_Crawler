@@ -20,7 +20,7 @@
       <div class="nav-logo">Gryphon</div>
       <div class="profile">
         <!-- <p class="username">Siddesh Shewde</p> -->
-          <!-- <div class="profile-logo">
+        <!-- <div class="profile-logo">
             <img src="{% static 'images/sid1.jpeg' %}" alt="" />
           </div> -->
       </div>
@@ -132,8 +132,7 @@
                 <th>Error Text</th>
               </tr>
             </thead>
-            <tbody class="table-body">
-            </tbody>
+            <tbody class="table-body"></tbody>
           </table>
         </div>
       </section>
@@ -187,42 +186,58 @@
         Http.open("POST", url);
         Http.setRequestHeader("X-CSRFToken", csrftoken);
         Http.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-        Http.send(JSON.stringify({"url": document.querySelector(".site-url").value}));
+        Http.send(
+          JSON.stringify({ url: document.querySelector(".site-url").value })
+        );
 
         return (Http.onreadystatechange = (e) => {
-          if(Http.responseText)
-          {
+          if (Http.responseText) {
             // Flush data in the tables
             document.querySelector("tbody").innerHTML = "";
-            let jsonErrorsObj = JSON.parse(Http.responseText)["Errors"]
-            let jsonStandardsObj = JSON.parse(Http.responseText)["Standards"]
-            let jsonCompatibilityObj = JSON.parse(Http.responseText)["Compatibility"]
-            
+
+            let jsonErrorsObj = JSON.parse(Http.responseText)["Errors"];
+            let jsonStandardsObj = JSON.parse(Http.responseText)["Standards"];
+            let jsonCompatibilityObj = JSON.parse(Http.responseText)[
+              "Compatibility"
+            ];
+
             const errorkeys = Object.values(jsonErrorsObj);
             const standardkeys = Object.values(jsonStandardsObj);
             const compatibility = Object.values(jsonCompatibilityObj);
-            let errorsrow = document.createElement("tr")
-            let standardsrow = document.createElement("tr")
-            
-            compatibility[0].forEach(element => {
-              let tr = document.createElement("tr")
-              let td = document.createElement("td")
-              tr.appendChild(td);
-              td.innerText = element
-              document.querySelector(".table-body").appendChild(tr)
-            })
-            standardkeys[0].forEach(element => {
-              let td = document.createElement("td")
-              standardsrow.appendChild(td);
-              td.innerText = element
-              document.querySelector(".table-body").appendChild(standardsrow)
-            })
-            
-            errorkeys[0].forEach(element => {
-              let td = document.createElement("td")
-              errorsrow.appendChild(td);
-              td.innerText = element
-              document.querySelector(".table-body").appendChild(errorsrow)
+
+            errorkeys.map((v, i) => {
+              if (Array.isArray(v)) {
+                let errorrow = document.createElement("tr");
+                v.map((value1, x) => {
+                  let tabledata = document.createElement("td");
+                  tabledata.innerText = value1;
+                  errorrow.appendChild(tabledata);
+                });
+                document.querySelector(".table-body").appendChild(errorrow);
+              }
+            });
+            standardkeys.map((v, i) => {
+              if (Array.isArray(v)) {
+                let standardrow = document.createElement("tr");
+                v.map((value1, x) => {
+                  let tabledata = document.createElement("td");
+                  tabledata.innerText = value1;
+                  standardrow.appendChild(tabledata);
+                });
+                document.querySelector(".table-body").appendChild(standardrow);
+              }
+            });
+
+            compatibility.map((v, i) => {
+              if (Array.isArray(v)) {
+                let comprow = document.createElement("tr");
+                v.map((value1, x) => {
+                  let tabledata = document.createElement("td");
+                  tabledata.innerText = value1;
+                  comprow.appendChild(tabledata);
+                });
+                document.querySelector(".table-body").appendChild(comprow);
+              }
             });
           }
         });
