@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup 
 
-def meta_description_tag_check(url):
+def meta_description_tag_check(page_text, url):
     '''
     Checking for meta tag description.
         - A well-written meta description attracts more clicks in search results than an irrelevant or missing description.
@@ -11,18 +11,21 @@ def meta_description_tag_check(url):
     @output:
         boolean: True (if description is present) else False
     '''
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text)
+    error_text = "Meta Description is not present."
+    guideline = "BING Webmaster Guidelines"
+    guideline_link = "https://www.bing.com/webmasters/help/webmasters-guidelines-30fba23a"
+
+    soup = BeautifulSoup(page_text, 'html.parser')
 
     all_metas = soup.find_all('meta')
 
     for meta in all_metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'description':
-            return True
+            return None
     
-    return False
+    return [error_text, url, guideline, ["-"]]
 
-def title_tag_check(page_text):
+def title_tag_check(page_text, url):
     '''
     Checking for title on a web page.
     Priority 1 - A (https://www.w3.org/TR/WCAG21/#page-titled)
@@ -31,13 +34,18 @@ def title_tag_check(page_text):
     @output:
         boolean: True (if title is present) else False
     '''
-    soup = BeautifulSoup(page_text.text, 'html.parser')
+    error_text = "Page title is not present."
+    guideline = "WCAG 2.0 A 2.4.2"
+    guideline_link = "https://www.w3.org/TR/WCAG21/#page-titled"
+
+    soup = BeautifulSoup(page_text, 'html.parser')
 
     title = soup.find_all('title')
 
     if title:
-        return True
-    return False
+        return None
+    else:
+        return [error_text, url, guideline, ["-"]]
 
 def doctype_check(page_text):
     '''

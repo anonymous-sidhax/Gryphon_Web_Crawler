@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup 
 
-def underlined_text_is_not_a_link_check(page_text):
+def underlined_text_is_not_a_link_check(page_text, url):
     '''
     Check if underlined text is not a link.
         -Avoid underlined text - people will click on it and think it's a broken link.
@@ -10,15 +10,18 @@ def underlined_text_is_not_a_link_check(page_text):
     @output:
         boolean: True (if underlined text is not a link) else False
     '''
-    soup = BeautifulSoup(page_text.text, 'html.parser')
+    error_text = "Underlined text is not a link"
+    guideline = "WCAG 2.0 F73 1.4.1"
+    guideline_link = "https://www.w3.org/TR/WCAG20-TECHS/F73.html"
+
+    soup = BeautifulSoup(page_text, 'html.parser')
 
     u_tags = soup.find_all('u')
 
     for underlined in u_tags:
         if '<a' not in underlined.get_text():
-            return True
-    
-    return False
+            return None
+    return [error_text, url, guideline, ["-"]]
 
 def src_length_check(page_text):
     '''

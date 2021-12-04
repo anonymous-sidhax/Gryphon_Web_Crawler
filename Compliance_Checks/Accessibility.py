@@ -22,7 +22,7 @@ def duplicate_id_check(page_text, url):
     duplicate_ids = [key for key, value in ids.items() if value > 1]
 
     if duplicate_ids:
-        #return [error_text, url, guideline, guideline_link, duplicate_ids]
+        #xreturn [error_text, url, guideline, guideline_link, duplicate_ids]
         return [error_text, url, guideline, duplicate_ids]
 
     else:
