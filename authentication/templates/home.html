@@ -197,13 +197,55 @@
 
             let jsonErrorsObj = JSON.parse(Http.responseText)["Errors"];
             let jsonStandardsObj = JSON.parse(Http.responseText)["Standards"];
-            let jsonCompatibilityObj = JSON.parse(Http.responseText)[
-              "Compatibility"
-            ];
+            let jsonCompatibilityObj = JSON.parse(Http.responseText)["Compatibility"];
+            let jsonAccessibility = JSON.parse(Http.responseText)["Accessibility"];
+            let jsonSearch = JSON.parse(Http.responseText)["Search"];
+            let jsonUsability = JSON.parse(Http.responseText)["Usability"];
 
             const errorkeys = Object.values(jsonErrorsObj);
             const standardkeys = Object.values(jsonStandardsObj);
             const compatibility = Object.values(jsonCompatibilityObj);
+            const Accessibility = Object.values(jsonAccessibility);
+            const Search = Object.values(jsonSearch);
+            const Usability = Object.values(jsonUsability);
+
+            
+
+            Accessibility.map((v, i) => {
+              if (Array.isArray(v)) {
+                let accessibility = document.createElement("tr");
+                v.map((value1, x) => {
+                  let tabledata = document.createElement("td");
+                  tabledata.innerText = value1;
+                  accessibility.appendChild(tabledata);
+                });
+                document.querySelector(".table-body").appendChild(accessibility);
+              }
+            });
+
+            Search.map((v, i) => {
+              if (Array.isArray(v)) {
+                let search = document.createElement("tr");
+                v.map((value1, x) => {
+                  let tabledata = document.createElement("td");
+                  tabledata.innerText = value1;
+                  search.appendChild(tabledata);
+                });
+                document.querySelector(".table-body").appendChild(search);
+              }
+            });
+
+            Usability.map((v, i) => {
+              if (Array.isArray(v)) {
+                let usability = document.createElement("tr");
+                v.map((value1, x) => {
+                  let tabledata = document.createElement("td");
+                  tabledata.innerText = value1;
+                  usability.appendChild(tabledata);
+                });
+                document.querySelector(".table-body").appendChild(usability);
+              }
+            });
 
             errorkeys.map((v, i) => {
               if (Array.isArray(v)) {
