@@ -17,11 +17,15 @@ def underlined_text_is_not_a_link_check(page_text, url):
     soup = BeautifulSoup(page_text, 'html.parser')
 
     u_tags = soup.find_all('u')
+    underlined_ids = []
 
     for underlined in u_tags:
         if '<a' not in underlined.get_text():
-            return None
-    return [error_text, url, guideline, ["-"]]
+            underlined_ids.extend([underlined.get_text()])
+    
+    if not underlined_ids:
+        return None
+    return [error_text, url, guideline, underlined_ids]
 
 def src_length_check(page_text):
     '''
