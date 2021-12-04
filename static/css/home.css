@@ -250,12 +250,17 @@ Card Content
   min-width: 776px;
   max-width: 90%;
   margin: auto;
+  word-break: break-all;
   margin-top: 50px;
 }
 
 table, th, td {
   padding: 10px;
   border: 1px solid black;
+}
+
+td a {
+  color: #313131;
 }
 
 table {

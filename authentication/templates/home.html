@@ -212,11 +212,19 @@
             
 
             Accessibility.map((v, i) => {
-              if (Array.isArray(v)) {
+              if (Array.isArray(v)) {                
                 let accessibility = document.createElement("tr");
                 v.map((value1, x) => {
                   let tabledata = document.createElement("td");
-                  tabledata.innerText = value1;
+                  if(x == 1) {
+                    let URL = document.createElement("a")
+                    URL.href = value1
+                    URL.innerText = value1;
+                    tabledata.appendChild(URL);
+                  }
+                  else {
+                    tabledata.innerText = value1;
+                  }
                   accessibility.appendChild(tabledata);
                 });
                 document.querySelector(".table-body").appendChild(accessibility);
@@ -228,7 +236,15 @@
                 let search = document.createElement("tr");
                 v.map((value1, x) => {
                   let tabledata = document.createElement("td");
-                  tabledata.innerText = value1;
+                  if(x == 1) {
+                    let URL = document.createElement("a")
+                    URL.href = value1
+                    URL.innerText = value1;
+                    tabledata.appendChild(URL);
+                  }
+                  else {
+                    tabledata.innerText = value1;
+                  }
                   search.appendChild(tabledata);
                 });
                 document.querySelector(".table-body").appendChild(search);
@@ -240,7 +256,15 @@
                 let usability = document.createElement("tr");
                 v.map((value1, x) => {
                   let tabledata = document.createElement("td");
-                  tabledata.innerText = value1;
+                  if(x == 1) {
+                    let URL = document.createElement("a")
+                    URL.href = value1
+                    URL.innerText = value1;
+                    tabledata.appendChild(URL);
+                  }
+                  else {
+                    tabledata.innerText = value1;
+                  }
                   usability.appendChild(tabledata);
                 });
                 document.querySelector(".table-body").appendChild(usability);
@@ -252,18 +276,35 @@
                 let errorrow = document.createElement("tr");
                 v.map((value1, x) => {
                   let tabledata = document.createElement("td");
-                  tabledata.innerText = value1;
+                  if(x == 1) {
+                    let URL = document.createElement("a")
+                    URL.href = value1
+                    URL.innerText = value1;
+                    tabledata.appendChild(URL);
+                  }
+                  else {
+                    tabledata.innerText = value1;
+                  }
                   errorrow.appendChild(tabledata);
                 });
                 document.querySelector(".table-body").appendChild(errorrow);
               }
             });
+            
             standardkeys.map((v, i) => {
               if (Array.isArray(v)) {
                 let standardrow = document.createElement("tr");
                 v.map((value1, x) => {
                   let tabledata = document.createElement("td");
-                  tabledata.innerText = value1;
+                  if(x == 1) {
+                    let URL = document.createElement("a")
+                    URL.href = value1
+                    URL.innerText = value1;
+                    tabledata.appendChild(URL);
+                  }
+                  else {
+                    tabledata.innerText = value1;
+                  }
                   standardrow.appendChild(tabledata);
                 });
                 document.querySelector(".table-body").appendChild(standardrow);
@@ -275,7 +316,15 @@
                 let comprow = document.createElement("tr");
                 v.map((value1, x) => {
                   let tabledata = document.createElement("td");
-                  tabledata.innerText = value1;
+                  if(x == 1) {
+                    let URL = document.createElement("a")
+                    URL.href = value1
+                    URL.innerText = value1;
+                    tabledata.appendChild(URL);
+                  }
+                  else {
+                    tabledata.innerText = value1;
+                  }
                   comprow.appendChild(tabledata);
                 });
                 document.querySelector(".table-body").appendChild(comprow);

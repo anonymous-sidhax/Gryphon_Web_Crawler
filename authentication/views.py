@@ -179,10 +179,10 @@ def crawler(request):
             "Usability" : USABILITY
             }
             )
-        # return JsonResponse(
-            # {"Errors": {0: ["Error Description", "URL1", "GUILDELINE1", "ERROR TEXT2"], 1: ["Error Description 2", "URL2", "GUILDELINE1", "ERROR TEXT1"]},
-            # "Compatibility": {0: [], 1: []}, 
-            # "Standards": {0:[], 1:[]}}
-            # )
     else:
         return HttpResponseForbidden()
+# return JsonResponse(
+# {"Errors": {0: ["Error Description", "URL1", "GUILDELINE1", "ERROR TEXT2"], 1: ["Error Description 2", "URL2", "GUILDELINE1", "ERROR TEXT1"]},
+# "Compatibility": {0: [], 1: []}, 
+# "Standards": {0:[], 1:[]}}
+# )
