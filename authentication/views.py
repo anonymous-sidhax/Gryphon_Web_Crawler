@@ -174,9 +174,9 @@ def crawler(request):
             {"Errors": ERRORS, 
             "Standards": STANDARDS,
             "Compatibility": COMPATIBILITY,
-            # "Accessibility": ACCESSIBILITY,
-            # "Search" : SEARCH,
-            # "Usability" : USABILITY
+            "Accessibility": ACCESSIBILITY,
+            "Search" : SEARCH,
+            "Usability" : USABILITY
             }
             )
         # return JsonResponse(
