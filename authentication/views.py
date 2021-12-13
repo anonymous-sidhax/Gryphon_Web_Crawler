@@ -46,7 +46,7 @@ HEADERS = {
 
 LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES = [], [], [], [], [], [], [], []
 CRAWLED_URLS, NEW_URLS, URLS = [], [], []
-ACCESSIBILITY, ERRORS, SEARCH, STANDARDS, COMPATIBILITY, USABILITY = {}, {}, {}, {}, {}, {}
+SUMMARY, ACCESSIBILITY, ERRORS, SEARCH, STANDARDS, COMPATIBILITY, USABILITY, COOKIES = {}, {}, {}, {}, {}, {}, {}, {}
 ERROR_COUNT, ACCESSIBILITY_COUNT, COMPATIBILITY_COUNT, SEARCH_COUNT, STANDARDS_COUNT, USABILITY_COUNT = 1, 1, 1, 1, 1, 1
 
 def remove_duplicates(duplicate_list):
@@ -64,6 +64,14 @@ def login(request):
 def dashboard(request):
     return render(request, "home.html")
 
+def cookie_checker(page):
+    cookies = {}
+    for cookie in page.cookies:
+        cookies[cookie.name] = [cookie.value, cookie.expires]    
+        
+    return JsonResponse(
+        cookies
+    )
 
 def ssl_expiry_datetime(hostname):
     ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
@@ -91,7 +99,7 @@ def crawler(request):
         start_time = time.time()
         global LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES
         global CRAWLED_URLS, NEW_URLS, URLS
-        global ACCESSIBILITY, Errors, COMPATIBILITY, STANDARDS
+        global ACCESSIBILITY, Errors, COMPATIBILITY, STANDARDS, SUMMARY, COOKIES
         global ERROR_COUNT
         Accessibility_count, Error_count, Search_count, Usability_count = 0, 0, 0, 0
 
@@ -145,6 +153,23 @@ def crawler(request):
             else:
                 LINKS.extend([url])
 
+
+        # SSL
+        now = datetime.datetime.now()
+        try:
+            expire = ssl_expiry_datetime(urlparse(base_url).netloc)
+            if expire > now:
+                SUMMARY.update({0 : ["SSL Certificate Proper", base_url, "SSL Expiry: " + expire, ["-"]]})
+            else:
+                SUMMARY.update(["SSL Certificate Expired", base_url, "SSL Expiry: " + expire, ["-"]])
+        except Exception as e:
+            print (e)
+            SUMMARY.update(["SSL Error", base_url, "No SSL detected", ["-"]])
+        
+        # Cookies
+        COOKIES = cookie_checker(page, base_url)
+        print (COOKIES)
+
         for link in LINKS:
             try:
                 page = requests.get(link, headers=HEADERS, allow_redirects=True, timeout=2) # Get Page
@@ -183,10 +208,10 @@ def crawler(request):
                 if expire > now:
                     pass
                 else:
-                    ERRORS.update(["SSL Error", link, "SSL Certificate Expired", ["-"]])
+                    SUMMARY.update(["SSL Error", link, "SSL Certificate Expired", ["-"]])
             except Exception as e:
                 print (e)
-                ERRORS.update(["SSL Error", link, "SSL Certificate Expired", ["-"]])
+                SUMMARY.update(["SSL Error", link, "No SSL Certificate Detected.", ["-"]])
 
             CRAWLED_URLS.extend(link)
         print(len(LINKS))
@@ -199,7 +224,8 @@ def crawler(request):
         print (end_time-start_time)
         print (ACCESSIBILITY)
         print (ERRORS)
-        print ({"Errors": ERRORS, 
+        print ({"SUMMARY" : SUMMARY,
+            "Errors": ERRORS, 
             "Standards": STANDARDS,
             "Compatibility": COMPATIBILITY,
             "Accessibility": ACCESSIBILITY,
