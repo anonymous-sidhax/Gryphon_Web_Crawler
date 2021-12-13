@@ -91,8 +91,3 @@ def contrast(rgb1, rgb2):
     brightest = math.max(lum1, lum2)
     darkest = math.min(lum1, lum2)
     return (brightest + 0.05) / (darkest + 0.05)
-
-
-contrast([255, 255, 255], [255, 255, 0])
-contrast([255, 255, 255], [0, 0, 255])
-
