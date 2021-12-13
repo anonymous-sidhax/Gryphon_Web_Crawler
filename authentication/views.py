@@ -2,8 +2,6 @@ import json
 from django.http.response import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.http import JsonResponse
-from Compliance_Checks import Errors
-from Compliance_Checks.Errors import blank_body_check
 import Utils.views as a
 
 import time, mimetypes, json
@@ -11,6 +9,12 @@ from threading import Lock
 import threading
 import requests, json, mimetypes, time
 from concurrent.futures import ThreadPoolExecutor
+
+# For SSL
+import socket
+import ssl
+import datetime
+from urllib.parse import urlparse
 
 # pip3 install requests
 import requests
@@ -59,6 +63,25 @@ def login(request):
 
 def dashboard(request):
     return render(request, "home.html")
+
+
+def ssl_expiry_datetime(hostname):
+    ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
+
+    context = ssl.create_default_context()
+    context.check_hostname = False
+
+    conn = context.wrap_socket(
+        socket.socket(socket.AF_INET),
+        server_hostname=hostname,
+    )
+    # 5 second timeout
+    conn.settimeout(5.0)
+
+    conn.connect((hostname, 443))
+    ssl_info = conn.getpeercert()
+    # Python datetime object
+    return datetime.datetime.strptime(ssl_info['notAfter'], ssl_dateformat)
 
 # You can't access this endpoint from GET method
 def crawler(request):
@@ -152,6 +175,19 @@ def crawler(request):
             if Usability.underlined_text_is_not_a_link_check is not None:
                 USABILITY.update({Usability_count : underlined_text_is_not_a_link_check})
                 Usability_count += 1
+
+            # SSL
+            now = datetime.datetime.now()
+            try:
+                expire = ssl_expiry_datetime(urlparse(link).netloc)
+                if expire > now:
+                    pass
+                else:
+                    ERRORS.update(["SSL Error", link, "SSL Certificate Expired", ["-"]])
+            except Exception as e:
+                print (e)
+                ERRORS.update(["SSL Error", link, "SSL Certificate Expired", ["-"]])
+
             CRAWLED_URLS.extend(link)
         print(len(LINKS))
         print(len(IMAGES))
