@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-{% load static %}
+<!DOCTYPE html> 
+{% load static %} 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/home.css' %}" />
     <script src="{% static 'js/home.js' %}" defer></script>
     <title>Gryphon</title>
@@ -19,110 +16,57 @@
     <nav class="navbar">
       <div class="nav-logo">Gryphon</div>
       <div class="profile">
+        {% comment "Profile photo" %}
         <!-- <p class="username">Siddesh Shewde</p> -->
-        <!-- <div class="profile-logo">
-            <img src="{% static 'images/sid1.jpeg' %}" alt="" />
-          </div> -->
+        <!-- <div class="profile-logo"><img src="{% static 'images/sid1.jpeg' %}" alt="" /></div> -->
+        {% endcomment %}
       </div>
     </nav>
     <section id="border"></section>
-
     <section id="main">
-      <form class="search" action="test" method="POST">
-        {% csrf_token %}
-        <input
-          type="text"
-          placeholder="Enter the website URL"
-          name="base_url"
-          class="site-url"
-        />
+      <form class="search" action="test" method="POST"> {% csrf_token %} <input type="text" placeholder="Enter the website URL" name="base_url" class="site-url" />
         <button type="submit" class="search">Run</button>
       </form>
-
       <section class="results d-none">
-        <!-- <div class="cards">
-          <div id="card1" class="card" onclick="openCard(event, 'card1')">
-            <div class="chart" id="graph">
-              <svg viewBox="0 0 36 36">
-                <path
-                  class="circle"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#444"
-                  ;
-                  stroke-width="1"
-                  ;
-                  stroke-dasharray="75, 100"
-                />
-                <text x="18" y="20.35" class="percentage">75%</text>
-              </svg>
-              <h4>Performance</h4>
-            </div>
-          </div>
-          <div id="card2" class="card" onclick="openCard(event, 'card2')">
-            <div class="chart" id="graph">
-              <svg viewBox="0 0 36 36">
-                <path
-                  class="circle"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#444"
-                  ;
-                  stroke-width="1"
-                  ;
-                  stroke-dasharray="75, 100"
-                />
-                <text x="18" y="20.35" class="percentage">75%</text>
-              </svg>
-              <h4>Accessibility</h4>
-            </div>
-          </div>
-          <div id="card3" class="card" onclick="openCard(event, 'card3')">
-            <div class="chart" id="graph">
-              <svg viewBox="0 0 36 36">
-                <path
-                  class="circle"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#444"
-                  ;
-                  stroke-width="1"
-                  ;
-                  stroke-dasharray="75, 100"
-                />
-                <text x="18" y="20.35" class="percentage">75%</text>
-              </svg>
-              <h4>Best Practices</h4>
-            </div>
-          </div>
-          <div id="card4" class="card" onclick="openCard(event, 'card4')">
-            <div class="chart" id="graph">
-              <svg viewBox="0 0 36 36">
-                <path
-                  class="circle"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#444"
-                  ;
-                  stroke-width="1"
-                  ;
-                  stroke-dasharray="75, 100"
-                />
-                <text x="18" y="20.35" class="percentage">75%</text>
-              </svg>
-              <h4>SEO</h4>
-            </div>
-          </div>
-        </div> -->
-        <div class="table-wrapper">
+        
+        <div class="tab-system-wrapper">
+          <button class="tablink" onclick="openPage('Errors', this, '#ff3535')" id="defaultOpen">Errors</button>
+          <button class="tablink" onclick="openPage('Summary', this, '#3e3ed4')">Summary</button>
+          <button class="tablink" onclick="openPage('Cookie_Checker', this, '#64ba64')">Cookie Checker</button>
+          <button class="tablink" onclick="openPage('Compatibility', this, '#64ba64')">Compatibility</button>
+          <button class="tablink" onclick="openPage('Accessibility', this, '#64ba64')">Accessibility</button>
+          <button class="tablink" onclick="openPage('Search', this, '#64ba64')">Search</button>
+          <button class="tablink" onclick="openPage('Usability', this, '#64ba64')">Usability</button>
+        </div>
+        
+      <div class="table-wrapper">
+        <div id="Summary" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Summary Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table> 
+        </div>
+        <div id="Cookie_Checker" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Cookie Checker Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table>
+        </div>
+        <div id="Errors" class="tabcontent">
           <table class="table">
             <thead>
               <tr>
@@ -135,224 +79,320 @@
             <tbody class="table-body"></tbody>
           </table>
         </div>
-      </section>
-    </section>
+        <div id="Compatibility" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Compatibility Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table> 
+        </div>
+        <div id="Accessibility" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Accessibility Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table> 
+        </div>
+        <div id="Search" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Search Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table> 
+        </div>
+        <div id="Usability" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Usability Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table> 
+        </div>
+        <div id="Standards" class="tabcontent">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Guideline</th>
+                <th>Usability Text</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table> 
+        </div>
+      </div>
+    <!-- -->
 
-    <script defer>
-      /**
+      
+      </section>
+      <script defer>
+        /**
     Get Cookie (https://docs.djangoproject.com/en/3.2/ref/csrf/)
     @param {name} Name of the cookie example:- getCookie('csrftoken')
 */
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-          const cookies = document.cookie.split(";");
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
-              break;
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
             }
           }
+          return cookieValue;
         }
-        return cookieValue;
-      }
 
-      /**
-    Function for opening cards
-    @param {string} evt - Event name
-    @param {string} cardName - Identifier for the card
-*/
-      function openCard(evt, cardName) {
-        var i, cardContent, card;
-        cardContent = document.getElementsByClassName("cardContent");
-        for (i = 0; i < cardContent.length; i++) {
-          cardContent[i].style.display = "none";
+        function openPage(pageName, elmnt, color) {
+          // Hide all elements with class="tabcontent" by default */
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          // Remove the background color of all tablinks/buttons
+          tablinks = document.getElementsByClassName("tablink");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+          }
+          // Show the specific tab content
+          document.getElementById(pageName).style.display = "block";
+          // Add the specific color to the button used to open the tab content
+          elmnt.style.backgroundColor = color;
         }
-        card = document.getElementsByClassName("card");
-        for (i = 0; i < card.length; i++) {
-          card[i].className = card[i].className.replace(" visible", "");
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+
+        function SendData(endpoint) {
+          const Http = new XMLHttpRequest();
+          const url = endpoint;
+          Http.open("POST", url);
+          Http.setRequestHeader("X-CSRFToken", csrftoken);
+          Http.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+          Http.send(JSON.stringify({
+            url: document.querySelector(".site-url").value
+          }));
+          return (Http.onreadystatechange = (e) => {
+            if (Http.responseText) {
+              // Flush data in the tables
+              document.querySelector("tbody").innerHTML = "";
+              let jsonErrorsObj = JSON.parse(Http.responseText)["Errors"];
+              let jsonStandardsObj = JSON.parse(Http.responseText)["Standards"];
+              let jsonCompatibilityObj = JSON.parse(Http.responseText)["Compatibility"];
+              let jsonAccessibility = JSON.parse(Http.responseText)["Accessibility"];
+              let jsonSearch = JSON.parse(Http.responseText)["Search"];
+              let jsonSUMMARY = JSON.parse(Http.responseText)["SUMMARY"];
+              let jsonUsability = JSON.parse(Http.responseText)["Usability"];
+              let jsonCOOKIES = JSON.parse(Http.responseText)["COOKIES"];
+              const errorkeys = Object.values(jsonErrorsObj);
+              const standardkeys = Object.values(jsonStandardsObj);
+              const compatibility = Object.values(jsonCompatibilityObj);
+              const Accessibility = Object.values(jsonAccessibility);
+              const Search = Object.values(jsonSearch);
+              const SUMMARY = Object.values(jsonSUMMARY);
+              const Usability = Object.values(jsonUsability);
+              const COOKIES = Object.values(jsonCOOKIES);
+
+
+              
+              SUMMARY.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let accessibility = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1;
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    accessibility.appendChild(tabledata);
+                  });
+                  document.querySelector("#Summary .table-body").appendChild(accessibility);
+                }
+              });
+
+
+              COOKIES.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let accessibility = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1;
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    accessibility.appendChild(tabledata);
+                  });
+                  document.querySelector("#Cookie_Checker .table-body").appendChild(accessibility);
+                }
+              });
+
+              Accessibility.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let accessibility = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1;
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    accessibility.appendChild(tabledata);
+                  });
+                  document.querySelector("#Accessibility .table-body").appendChild(accessibility);
+                }
+              });
+
+              Search.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let search = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1;
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    search.appendChild(tabledata);
+                  });
+                  document.querySelector("#Search .table-body").appendChild(search);
+                }
+              });
+              Usability.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let usability = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    usability.appendChild(tabledata);
+                  });
+                  document.querySelector("#Usability .table-body").appendChild(usability);
+                }
+              });
+              errorkeys.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let errorrow = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    errorrow.appendChild(tabledata);
+                  });
+                  document.querySelector("#Errors .table-body").appendChild(errorrow);
+                }
+              });
+              standardkeys.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let standardrow = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.href = value1
+                      URL.target = "_blank";
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    standardrow.appendChild(tabledata);
+                  });
+                  document.querySelector("#Standards .table-body").appendChild(standardrow);
+                }
+              });
+              compatibility.map((v, i) => {
+                if (Array.isArray(v)) {
+                  let comprow = document.createElement("tr");
+                  v.map((value1, x) => {
+                    let tabledata = document.createElement("td");
+                    if (x == 1) {
+                      let URL = document.createElement("a")
+                      URL.target = "_blank";
+                      URL.href = value1;
+                      URL.innerText = value1;
+                      tabledata.appendChild(URL);
+                    } else {
+                      tabledata.innerText = value1;
+                    }
+                    comprow.appendChild(tabledata);
+                  });
+                  document.querySelector("#Compatibility .table-body").appendChild(comprow);
+                }
+              });
+            }
+          });
         }
-        document.getElementById(cardName).style.display = "block";
-        evt.currentTarget.className += " visible";
-      }
-
-      function SendData(endpoint) {
-        const Http = new XMLHttpRequest();
-        const url = endpoint;
-        Http.open("POST", url);
-        Http.setRequestHeader("X-CSRFToken", csrftoken);
-        Http.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-        Http.send(
-          JSON.stringify({ url: document.querySelector(".site-url").value })
-        );
-
-        return (Http.onreadystatechange = (e) => {
-          if (Http.responseText) {
-            // Flush data in the tables
-            document.querySelector("tbody").innerHTML = "";
-
-            let jsonErrorsObj = JSON.parse(Http.responseText)["Errors"];
-            let jsonStandardsObj = JSON.parse(Http.responseText)["Standards"];
-            let jsonCompatibilityObj = JSON.parse(Http.responseText)["Compatibility"];
-            let jsonAccessibility = JSON.parse(Http.responseText)["Accessibility"];
-            let jsonSearch = JSON.parse(Http.responseText)["Search"];
-            let jsonUsability = JSON.parse(Http.responseText)["Usability"];
-
-            const errorkeys = Object.values(jsonErrorsObj);
-            const standardkeys = Object.values(jsonStandardsObj);
-            const compatibility = Object.values(jsonCompatibilityObj);
-            const Accessibility = Object.values(jsonAccessibility);
-            const Search = Object.values(jsonSearch);
-            const Usability = Object.values(jsonUsability);
-
-            
-
-            Accessibility.map((v, i) => {
-              if (Array.isArray(v)) {                
-                let accessibility = document.createElement("tr");
-                v.map((value1, x) => {
-                  let tabledata = document.createElement("td");
-                  if(x == 1) {
-                    let URL = document.createElement("a")
-                    URL.href = value1;
-                    URL.target = "_blank";
-                    URL.innerText = value1;
-                    tabledata.appendChild(URL);
-                  }
-                  else {
-                    tabledata.innerText = value1;
-                  }
-                  accessibility.appendChild(tabledata);
-                });
-                document.querySelector(".table-body").appendChild(accessibility);
-              }
-            });
-
-            Search.map((v, i) => {
-              if (Array.isArray(v)) {
-                let search = document.createElement("tr");
-                v.map((value1, x) => {
-                  let tabledata = document.createElement("td");
-                  if(x == 1) {
-                    let URL = document.createElement("a")
-                    URL.href = value1;
-                    URL.target = "_blank";
-                    URL.innerText = value1;
-                    tabledata.appendChild(URL);
-                  }
-                  else {
-                    tabledata.innerText = value1;
-                  }
-                  search.appendChild(tabledata);
-                });
-                document.querySelector(".table-body").appendChild(search);
-              }
-            });
-
-            Usability.map((v, i) => {
-              if (Array.isArray(v)) {
-                let usability = document.createElement("tr");
-                v.map((value1, x) => {
-                  let tabledata = document.createElement("td");
-                  if(x == 1) {
-                    let URL = document.createElement("a")
-                    URL.href = value1
-                    URL.target = "_blank";
-                    URL.innerText = value1;
-                    tabledata.appendChild(URL);
-                  }
-                  else {
-                    tabledata.innerText = value1;
-                  }
-                  usability.appendChild(tabledata);
-                });
-                document.querySelector(".table-body").appendChild(usability);
-              }
-            });
-
-            errorkeys.map((v, i) => {
-              if (Array.isArray(v)) {
-                let errorrow = document.createElement("tr");
-                v.map((value1, x) => {
-                  let tabledata = document.createElement("td");
-                  if(x == 1) {
-                    let URL = document.createElement("a")
-                    URL.href = value1
-                    URL.target = "_blank";
-                    URL.innerText = value1;
-                    tabledata.appendChild(URL);
-                  }
-                  else {
-                    tabledata.innerText = value1;
-                  }
-                  errorrow.appendChild(tabledata);
-                });
-                document.querySelector(".table-body").appendChild(errorrow);
-              }
-            });
-            
-            standardkeys.map((v, i) => {
-              if (Array.isArray(v)) {
-                let standardrow = document.createElement("tr");
-                v.map((value1, x) => {
-                  let tabledata = document.createElement("td");
-                  if(x == 1) {
-                    let URL = document.createElement("a")
-                    URL.href = value1
-                    URL.target = "_blank";
-                    URL.innerText = value1;
-                    tabledata.appendChild(URL);
-                  }
-                  else {
-                    tabledata.innerText = value1;
-                  }
-                  standardrow.appendChild(tabledata);
-                });
-                document.querySelector(".table-body").appendChild(standardrow);
-              }
-            });
-
-            compatibility.map((v, i) => {
-              if (Array.isArray(v)) {
-                let comprow = document.createElement("tr");
-                v.map((value1, x) => {
-                  let tabledata = document.createElement("td");
-                  if(x == 1) {
-                    let URL = document.createElement("a")
-                    URL.target = "_blank";
-                    URL.href = value1;
-                    URL.innerText = value1;
-                    tabledata.appendChild(URL);
-                  }
-                  else {
-                    tabledata.innerText = value1;
-                  }
-                  comprow.appendChild(tabledata);
-                });
-                document.querySelector(".table-body").appendChild(comprow);
-              }
-            });
+        let searchBar = document.querySelector(".search");
+        searchBar.addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (searchBar.classList.contains("animateup")) {
+            SendData("{% url 'crawler' %}");
+          } else {
+            searchBar.classList.add("animateup");
+            document.querySelector("section.results").classList.remove("d-none");
+            SendData("{% url 'crawler' %}");
           }
         });
-      }
-
-      let searchBar = document.querySelector(".search");
-      searchBar.addEventListener("submit", (e) => {
-        e.preventDefault();
-        if (searchBar.classList.contains("animateup")) {
-          SendData("{% url 'crawler' %}");
-        } else {
-          searchBar.classList.add("animateup");
-          document.querySelector("section.results").classList.remove("d-none");
-          SendData("{% url 'crawler' %}");
-        }
-      });
-
-      const csrftoken = getCookie("csrftoken");
-    </script>
+        const csrftoken = getCookie("csrftoken");
+      </script>
   </body>
 </html>
