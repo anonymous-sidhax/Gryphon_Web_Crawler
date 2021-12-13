@@ -175,7 +175,7 @@ def crawler(request):
         try:
             expire = ssl_expiry_datetime(urlparse(base_url).netloc)
             if expire > now:
-                SUMMARY.update({0: ["SSL Certificate Proper", base_url,
+                SUMMARY.update({0: ["SSL Certificate is Proper", base_url,
                                "SSL Expiry: " + expire.strftime("%m/%d/%Y, %H:%M:%S"), ["-"]]})
                 Summary_count += 1
             else:
