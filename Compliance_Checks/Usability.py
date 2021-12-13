@@ -65,7 +65,7 @@ def null_tabindex_check(page_text):
     for form_tag in form_tags:
         if form_tag.find('tabindex')  == "-1":
             error_ids.append(form_tag['id']) or error_ids.append(form_tag['class'])   
-    for a_tag in form_tags:
+    for a_tag in a_tags:
         if a_tag.find('tabindex')  == "-1":
             error_ids.append(a_tag['id']) or error_ids.append(a_tag['class'])
 
