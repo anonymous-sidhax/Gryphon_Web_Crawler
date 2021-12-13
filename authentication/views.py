@@ -80,7 +80,7 @@ def cookie_checker(page, base_url):
     cookie_count = 0
     for cookie in page.cookies:
         cookies.update(
-            {cookie_count: [cookie.value, base_url, datetime.datetime.fromtimestamp(cookie.expires).strftime('%Y-%m-%d %H:%M:%S'), ["-"]]})
+            {cookie_count: [cookie.value, base_url, cookie.expires, ["-"]]})
         cookie_count += 1
 
     return cookies
@@ -247,8 +247,8 @@ def crawler(request):
                     ["SSL Error", link, "No SSL Certificate Detected.", ["-"]])
 
             CRAWLED_URLS.extend(link)
-        if ACCESSIBILITY != {}:
-            SUMMARY.update(["Issues in Alt text in Images", "Multiple URLs", "Check ACCESSIBILITY Tab", ["-"]])
+        if ACCESSIBILITY:
+            SUMMARY.update({1: ["Issues in Alt text in Images", "Multiple URLs", "Check Accessibility Tab", ["-"]]})
 
         print(len(LINKS))
         print(len(IMAGES))
