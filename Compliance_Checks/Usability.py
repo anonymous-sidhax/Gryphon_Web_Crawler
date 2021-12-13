@@ -57,7 +57,7 @@ def null_tabindex_check(page_text):
     @output:
         list: List of ids or class with null tabindex.
     '''
-    soup = BeautifulSoup(page_text.text, "html.parser")
+    soup = BeautifulSoup(page_text, "html.parser")
         
     form_tags = soup.find_all('form')
     a_tags = soup.find_all('a')

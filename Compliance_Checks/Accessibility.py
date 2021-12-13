@@ -40,7 +40,7 @@ def alt_in_img_elements_check(page_text):
     @output:
         list: List of image src without alt.
     '''
-    soup = BeautifulSoup(page_text.text, "html.parser")
+    soup = BeautifulSoup(page_text, "html.parser")
 
     img_tags = soup.find_all('img')
     empty_alt = []
