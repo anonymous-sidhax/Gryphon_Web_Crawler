@@ -1,3 +1,4 @@
+from os import error
 from bs4 import BeautifulSoup 
 
 def underlined_text_is_not_a_link_check(page_text, url):
@@ -47,3 +48,25 @@ def src_length_check(page_text):
     
     return longer_a_tags
 
+def null_tabindex_check(page_text):
+    '''
+    Checking if null tabindex attribute is present on any forms or links.
+    (https://www.maxability.co.in/2016/06/13/tabindex-for-accessibility-good-bad-and-ugly/)
+    @input:
+        page_text: Source code of the current web page.
+    @output:
+        list: List of ids or class with null tabindex.
+    '''
+    soup = BeautifulSoup(page_text.text, "html.parser")
+        
+    form_tags = soup.find_all('form')
+    a_tags = soup.find_all('a')
+    error_ids = []
+    for form_tag in form_tags:
+        if form_tag.find('tabindex')  == "-1":
+            error_ids.append(form_tag['id']) or error_ids.append(form_tag['class'])   
+    for a_tag in form_tags:
+        if a_tag.find('tabindex')  == "-1":
+            error_ids.append(a_tag['id']) or error_ids.append(a_tag['class'])
+
+    return error_ids

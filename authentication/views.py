@@ -47,7 +47,7 @@ HEADERS = {
 LINKS, IMAGES, VIDEOS, DOCS, AUDIO, FILES, SCRIPTS, OTHER_TYPES = [], [], [], [], [], [], [], []
 CRAWLED_URLS, NEW_URLS, URLS = [], [], []
 SUMMARY, ACCESSIBILITY, ERRORS, SEARCH, STANDARDS, COMPATIBILITY, USABILITY, COOKIES = {}, {}, {}, {}, {}, {}, {}, {}
-ERROR_COUNT, ACCESSIBILITY_COUNT, COMPATIBILITY_COUNT, SEARCH_COUNT, STANDARDS_COUNT, USABILITY_COUNT = 1, 1, 1, 1, 1, 1
+ERROR_COUNT, ACCESSIBILITY_COUNT, COMPATIBILITY_COUNT, SEARCH_COUNT, STANDARDS_COUNT, USABILITY_COUNT, SUMMARY_COUNT = 1, 1, 1, 1, 1, 1, 1
 
 def remove_duplicates(duplicate_list):
     '''
@@ -64,14 +64,14 @@ def login(request):
 def dashboard(request):
     return render(request, "home.html")
 
-def cookie_checker(page):
+def cookie_checker(page, base_url):
     cookies = {}
+    cookie_count = 0
     for cookie in page.cookies:
-        cookies[cookie.name] = [cookie.value, cookie.expires]    
+        cookies.update({cookie_count : [cookie.value, base_url, cookie.expires, ["-"]]})
+        cookie_count += 1   
         
-    return JsonResponse(
-        cookies
-    )
+    return cookies
 
 def ssl_expiry_datetime(hostname):
     ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
@@ -101,7 +101,7 @@ def crawler(request):
         global CRAWLED_URLS, NEW_URLS, URLS
         global ACCESSIBILITY, Errors, COMPATIBILITY, STANDARDS, SUMMARY, COOKIES
         global ERROR_COUNT
-        Accessibility_count, Error_count, Search_count, Usability_count = 0, 0, 0, 0
+        Summary_count, Accessibility_count, Error_count, Search_count, Usability_count = 0, 0, 0, 0, 0
 
         #base_url = request.Get.get('base_url')
         # base_url = "https://www.wikipedia.com"
@@ -159,15 +159,18 @@ def crawler(request):
         try:
             expire = ssl_expiry_datetime(urlparse(base_url).netloc)
             if expire > now:
-                SUMMARY.update({0 : ["SSL Certificate Proper", base_url, "SSL Expiry: " + expire, ["-"]]})
+                SUMMARY.update({0 : ["SSL Certificate Proper", base_url, "SSL Expiry: " + expire.strftime("%m/%d/%Y, %H:%M:%S"), ["-"]]})
+                Summary_count += 1
             else:
-                SUMMARY.update(["SSL Certificate Expired", base_url, "SSL Expiry: " + expire, ["-"]])
+                SUMMARY.update({0 : ["SSL Certificate Expired", base_url, "SSL Expiry: " + expire, ["-"]]})
+                Summary_count += 1
         except Exception as e:
             print (e)
-            SUMMARY.update(["SSL Error", base_url, "No SSL detected", ["-"]])
+            SUMMARY.update({0 : ["SSL Error", base_url, "No SSL detected", ["-"]]})
+            Summary_count += 1
         
         # Cookies
-        COOKIES = cookie_checker(page, base_url)
+        COOKIES = cookie_checker(page)
         print (COOKIES)
 
         for link in LINKS:
@@ -184,6 +187,7 @@ def crawler(request):
             meta_description_tag_check = Search.meta_description_tag_check(page.content, link)
             title_tag_check = Search.title_tag_check(page.content, link)
             underlined_text_is_not_a_link_check = Usability.underlined_text_is_not_a_link_check(page.content, link)
+            null_tabindex_check = Usability.null_tabindex_check(page.content)
 
             if duplicate_id_check is not None:
                 ACCESSIBILITY.update({Accessibility_count : duplicate_id_check})
@@ -199,6 +203,9 @@ def crawler(request):
                 Search_count += 1
             if Usability.underlined_text_is_not_a_link_check is not None:
                 USABILITY.update({Usability_count : underlined_text_is_not_a_link_check})
+                Usability_count += 1
+            if Usability.null_tabindex_check is not None:
+                USABILITY.update({Usability_count : null_tabindex_check})
                 Usability_count += 1
 
             # SSL
@@ -225,6 +232,7 @@ def crawler(request):
         print (ACCESSIBILITY)
         print (ERRORS)
         print ({"SUMMARY" : SUMMARY,
+            "COOKIES" : COOKIES,
             "Errors": ERRORS, 
             "Standards": STANDARDS,
             "Compatibility": COMPATIBILITY,
